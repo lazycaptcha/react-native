@@ -1,5 +1,5 @@
-export type LazyCaptchaType = 'auto' | 'image_puzzle' | 'pow' | 'behavioral' | 'text_math';
-export type LazyCaptchaTheme = 'light' | 'dark';
+export type LazyCaptchaType = 'auto' | 'image_puzzle' | 'pow' | 'behavioral' | 'text_math' | 'press_hold' | 'rotate_align';
+export type LazyCaptchaTheme = 'light' | 'dark' | 'auto';
 
 export interface LazyCaptchaProps {
     /** Public site key from your LazyCaptcha dashboard (UUID). */
