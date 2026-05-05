@@ -27,6 +27,8 @@ export function ContactScreen() {
     const captcha = useLazyCaptcha({
         sitekey: 'YOUR_SITE_KEY',
         type: 'auto',
+        widget: 'compact',
+        width: '420px',
     });
 
     async function submit() {
@@ -86,18 +88,20 @@ function MyScreen() {
 |------|------|---------|-------------|
 | `sitekey` | `string` | **required** | Public UUID from your dashboard |
 | `type` | `'auto' \| 'image_puzzle' \| 'pow' \| 'behavioral' \| 'text_math' \| 'press_hold' \| 'rotate_align'` | `'auto'` | Challenge type |
-| `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | Widget theme. `'auto'` follows the OS `prefers-color-scheme`. |
+| `theme` | `'light' \| 'dark' \| 'auto'` | `'auto'` | Widget theme. `'auto'` follows the OS `prefers-color-scheme`. |
+| `widget` | `'standard' \| 'compact' \| 'newsletter' \| 'login'` | `'standard'` | Widget preset. `newsletter` stays intentionally skinny. |
+| `width` | `number \| string` | â€” | Optional width override. The hosted widget caps widths at `500px`. |
 | `baseUrl` | `string` | `'https://lazycaptcha.com'` | Your LazyCaptcha instance |
 | `visible` | `boolean` | `true` | Modal visibility (use with `onRequestClose`) |
 | `animationType` | `'none' \| 'slide' \| 'fade'` | `'slide'` | Modal animation |
-| `onVerify` | `(token: string) => void` | — | Called when user solves |
+| `onVerify` | `(token: string) => void` | — | Called when the user completes the challenge flow |
 | `onCancel` | `() => void` | — | Called on backdrop tap / back press |
 | `onError` | `(err: string) => void` | — | Called on error |
 | `onRequestClose` | `() => void` | — | Android back button handler |
 
 ## How it works
 
-The SDK renders the LazyCaptcha widget inside a `react-native-webview`. When the user solves the challenge, an inline script inside the WebView posts the token back to React Native via `ReactNativeWebView.postMessage`. The component picks up the message and fires `onVerify`.
+The SDK renders the LazyCaptcha widget inside a `react-native-webview`. When the user completes the challenge flow, an inline script inside the WebView posts the token back to React Native via `ReactNativeWebView.postMessage`. The component picks up the message and fires `onVerify`.
 
 ## Server verification
 

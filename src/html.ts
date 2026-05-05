@@ -1,4 +1,4 @@
-import type { LazyCaptchaTheme, LazyCaptchaType } from './types';
+import type { LazyCaptchaTheme, LazyCaptchaType, LazyCaptchaWidgetPreset, LazyCaptchaWidgetWidth } from './types';
 
 /**
  * Builds the HTML shell loaded inside the WebView. The shell loads the
@@ -10,11 +10,16 @@ export function buildCaptchaHtml(opts: {
     baseUrl: string;
     type: LazyCaptchaType;
     theme: LazyCaptchaTheme;
+    widget: LazyCaptchaWidgetPreset;
+    width?: LazyCaptchaWidgetWidth;
 }): string {
-    const { sitekey, baseUrl, type, theme } = opts;
+    const { sitekey, baseUrl, type, theme, widget, width } = opts;
     const scriptUrl = `${baseUrl.replace(/\/$/, '')}/api/captcha/v1/lazycaptcha.js`;
 
     const body = escapeHtml(theme === 'dark' ? '#1a1a2e' : '#ffffff');
+    const widthAttr = width === undefined || width === null
+        ? ''
+        : ` data-width="${escapeHtml(String(width))}"`;
 
     return `<!DOCTYPE html>
 <html>
@@ -25,7 +30,7 @@ export function buildCaptchaHtml(opts: {
         html, body { margin:0; padding:0; height:100%; background:${body};
                      font-family:-apple-system,BlinkMacSystemFont,Roboto,sans-serif; }
         body { display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box; }
-        #wrap { width:100%; max-width:340px; }
+        #wrap { width:100%; max-width:500px; }
     </style>
 </head>
 <body>
@@ -33,7 +38,8 @@ export function buildCaptchaHtml(opts: {
         <div class="lazycaptcha"
              data-sitekey="${escapeHtml(sitekey)}"
              data-type="${escapeHtml(type)}"
-             data-theme="${escapeHtml(theme)}"></div>
+             data-theme="${escapeHtml(theme)}"
+             data-widget="${escapeHtml(widget)}"${widthAttr}></div>
     </div>
     <script src="${escapeHtml(scriptUrl)}" async defer></script>
     <script>

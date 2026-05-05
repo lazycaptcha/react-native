@@ -14,14 +14,16 @@ import type { LazyCaptchaBridgeMessage, LazyCaptchaProps } from './types';
 /**
  * Modal LazyCaptcha component for React Native.
  *
- * Renders the widget inside a WebView; when the user solves the challenge,
+ * Renders the widget inside a WebView; when the user completes the challenge flow,
  * the onVerify callback fires with the token.
  */
 export function LazyCaptcha(props: LazyCaptchaProps) {
     const {
         sitekey,
         type = 'auto',
-        theme = 'light',
+        theme = 'auto',
+        widget = 'standard',
+        width,
         baseUrl = 'https://lazycaptcha.com',
         visible = true,
         animationType = 'slide',
@@ -35,8 +37,8 @@ export function LazyCaptcha(props: LazyCaptchaProps) {
     const resolvedOnce = useRef(false);
 
     const html = useMemo(
-        () => buildCaptchaHtml({ sitekey, baseUrl, type, theme }),
-        [sitekey, baseUrl, type, theme]
+        () => buildCaptchaHtml({ sitekey, baseUrl, type, theme, widget, width }),
+        [sitekey, baseUrl, type, theme, widget, width]
     );
 
     const handleMessage = useCallback(
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '92%',
-        maxWidth: 360,
+        maxWidth: 500,
         height: 420,
         backgroundColor: '#ffffff',
         borderRadius: 12,

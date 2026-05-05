@@ -5,6 +5,8 @@ export interface UseLazyCaptchaOptions {
     sitekey: string;
     type?: LazyCaptchaProps['type'];
     theme?: LazyCaptchaProps['theme'];
+    widget?: LazyCaptchaProps['widget'];
+    width?: LazyCaptchaProps['width'];
     baseUrl?: string;
 }
 
@@ -19,6 +21,8 @@ export interface UseLazyCaptchaReturn {
         sitekey: string;
         type?: LazyCaptchaProps['type'];
         theme?: LazyCaptchaProps['theme'];
+        widget?: LazyCaptchaProps['widget'];
+        width?: LazyCaptchaProps['width'];
         baseUrl?: string;
         visible: boolean;
         onVerify: (t: string) => void;
@@ -101,6 +105,8 @@ export function useLazyCaptcha(options: UseLazyCaptchaOptions): UseLazyCaptchaRe
             sitekey: options.sitekey,
             type: options.type,
             theme: options.theme,
+            widget: options.widget,
+            width: options.width,
             baseUrl: options.baseUrl,
             visible,
             onVerify,
